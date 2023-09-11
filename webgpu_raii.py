@@ -16,6 +16,10 @@ print("""#pragma once
 
 #include <webgpu/webgpu.h>
 #include <memory>
+
+#ifdef DEBUG_WEBGPU_RAII
+#include <iostream>
+#endif
 """)
 
 ## From: https://stackoverflow.com/questions/60568363/shared-ptr-custom-deleter
@@ -23,7 +27,11 @@ print("""#pragma once
 for T in types:
     print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
     WGPU{T}Ref() {{}}
-    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, wgpu{T}Release ) {{}}
+#ifdef DEBUG_WEBGPU_RAII
+    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n'; }} ) {{}}
+#else
+    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ if( {T} ) wgpu{T}Release; }} ) {{}}
+#endif
     operator WGPU{T}() const {{ return get(); }}
 }};""" )
     print( f"WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
