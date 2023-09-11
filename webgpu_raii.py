@@ -27,7 +27,7 @@ print("""#pragma once
 for T in types:
     print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
     WGPU{T}Ref() {{}}
-#ifdef DEBUG_WEBGPU_RAII
+#ifdef WEBGPU_RAII_DEBUG
     WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{
         std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
 #ifdef WEBGPU_RAII_LEAK
