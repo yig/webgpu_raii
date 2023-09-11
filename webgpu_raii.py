@@ -22,6 +22,7 @@ print("""#pragma once
 ## From: https://stackoverflow.com/questions/56091228/implicit-conversion-of-stdshared-ptr-to-pointer-type
 for T in types:
     print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
+    WGPU{T}Ref() {{}}
     WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, wgpu{T}Release ) {{}}
     operator WGPU{T}() const {{ return get(); }}
 }};""" )
