@@ -3,69 +3,135 @@
 #include <webgpu/webgpu.h>
 #include <memory>
 
-typedef std::unique_ptr< std::remove_pointer<WGPUAdapter>::type, void(*)(WGPUAdapter) > WGPUAdapterRef;
-WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter, wgpuAdapterRelease ); }
+struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>::type > {
+    WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, wgpuAdapterRelease ) {}
+    operator WGPUAdapter() const { return get(); }
+};
+WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUBindGroup>::type, void(*)(WGPUBindGroup) > WGPUBindGroupRef;
-WGPUBindGroupRef ref( WGPUBindGroup BindGroup ) { return WGPUBindGroupRef( BindGroup, wgpuBindGroupRelease ); }
+struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type > {
+    WGPUBindGroupRef( WGPUBindGroup BindGroup ) : std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type >( BindGroup, wgpuBindGroupRelease ) {}
+    operator WGPUBindGroup() const { return get(); }
+};
+WGPUBindGroupRef ref( WGPUBindGroup BindGroup ) { return WGPUBindGroupRef( BindGroup ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUBindGroupLayout>::type, void(*)(WGPUBindGroupLayout) > WGPUBindGroupLayoutRef;
-WGPUBindGroupLayoutRef ref( WGPUBindGroupLayout BindGroupLayout ) { return WGPUBindGroupLayoutRef( BindGroupLayout, wgpuBindGroupLayoutRelease ); }
+struct WGPUBindGroupLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroupLayout>::type > {
+    WGPUBindGroupLayoutRef( WGPUBindGroupLayout BindGroupLayout ) : std::shared_ptr< std::remove_pointer<WGPUBindGroupLayout>::type >( BindGroupLayout, wgpuBindGroupLayoutRelease ) {}
+    operator WGPUBindGroupLayout() const { return get(); }
+};
+WGPUBindGroupLayoutRef ref( WGPUBindGroupLayout BindGroupLayout ) { return WGPUBindGroupLayoutRef( BindGroupLayout ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUBuffer>::type, void(*)(WGPUBuffer) > WGPUBufferRef;
-WGPUBufferRef ref( WGPUBuffer Buffer ) { return WGPUBufferRef( Buffer, wgpuBufferRelease ); }
+struct WGPUBufferRef : public std::shared_ptr< std::remove_pointer<WGPUBuffer>::type > {
+    WGPUBufferRef( WGPUBuffer Buffer ) : std::shared_ptr< std::remove_pointer<WGPUBuffer>::type >( Buffer, wgpuBufferRelease ) {}
+    operator WGPUBuffer() const { return get(); }
+};
+WGPUBufferRef ref( WGPUBuffer Buffer ) { return WGPUBufferRef( Buffer ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUCommandBuffer>::type, void(*)(WGPUCommandBuffer) > WGPUCommandBufferRef;
-WGPUCommandBufferRef ref( WGPUCommandBuffer CommandBuffer ) { return WGPUCommandBufferRef( CommandBuffer, wgpuCommandBufferRelease ); }
+struct WGPUCommandBufferRef : public std::shared_ptr< std::remove_pointer<WGPUCommandBuffer>::type > {
+    WGPUCommandBufferRef( WGPUCommandBuffer CommandBuffer ) : std::shared_ptr< std::remove_pointer<WGPUCommandBuffer>::type >( CommandBuffer, wgpuCommandBufferRelease ) {}
+    operator WGPUCommandBuffer() const { return get(); }
+};
+WGPUCommandBufferRef ref( WGPUCommandBuffer CommandBuffer ) { return WGPUCommandBufferRef( CommandBuffer ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUCommandEncoder>::type, void(*)(WGPUCommandEncoder) > WGPUCommandEncoderRef;
-WGPUCommandEncoderRef ref( WGPUCommandEncoder CommandEncoder ) { return WGPUCommandEncoderRef( CommandEncoder, wgpuCommandEncoderRelease ); }
+struct WGPUCommandEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUCommandEncoder>::type > {
+    WGPUCommandEncoderRef( WGPUCommandEncoder CommandEncoder ) : std::shared_ptr< std::remove_pointer<WGPUCommandEncoder>::type >( CommandEncoder, wgpuCommandEncoderRelease ) {}
+    operator WGPUCommandEncoder() const { return get(); }
+};
+WGPUCommandEncoderRef ref( WGPUCommandEncoder CommandEncoder ) { return WGPUCommandEncoderRef( CommandEncoder ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUComputePassEncoder>::type, void(*)(WGPUComputePassEncoder) > WGPUComputePassEncoderRef;
-WGPUComputePassEncoderRef ref( WGPUComputePassEncoder ComputePassEncoder ) { return WGPUComputePassEncoderRef( ComputePassEncoder, wgpuComputePassEncoderRelease ); }
+struct WGPUComputePassEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUComputePassEncoder>::type > {
+    WGPUComputePassEncoderRef( WGPUComputePassEncoder ComputePassEncoder ) : std::shared_ptr< std::remove_pointer<WGPUComputePassEncoder>::type >( ComputePassEncoder, wgpuComputePassEncoderRelease ) {}
+    operator WGPUComputePassEncoder() const { return get(); }
+};
+WGPUComputePassEncoderRef ref( WGPUComputePassEncoder ComputePassEncoder ) { return WGPUComputePassEncoderRef( ComputePassEncoder ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUComputePipeline>::type, void(*)(WGPUComputePipeline) > WGPUComputePipelineRef;
-WGPUComputePipelineRef ref( WGPUComputePipeline ComputePipeline ) { return WGPUComputePipelineRef( ComputePipeline, wgpuComputePipelineRelease ); }
+struct WGPUComputePipelineRef : public std::shared_ptr< std::remove_pointer<WGPUComputePipeline>::type > {
+    WGPUComputePipelineRef( WGPUComputePipeline ComputePipeline ) : std::shared_ptr< std::remove_pointer<WGPUComputePipeline>::type >( ComputePipeline, wgpuComputePipelineRelease ) {}
+    operator WGPUComputePipeline() const { return get(); }
+};
+WGPUComputePipelineRef ref( WGPUComputePipeline ComputePipeline ) { return WGPUComputePipelineRef( ComputePipeline ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUDevice>::type, void(*)(WGPUDevice) > WGPUDeviceRef;
-WGPUDeviceRef ref( WGPUDevice Device ) { return WGPUDeviceRef( Device, wgpuDeviceRelease ); }
+struct WGPUDeviceRef : public std::shared_ptr< std::remove_pointer<WGPUDevice>::type > {
+    WGPUDeviceRef( WGPUDevice Device ) : std::shared_ptr< std::remove_pointer<WGPUDevice>::type >( Device, wgpuDeviceRelease ) {}
+    operator WGPUDevice() const { return get(); }
+};
+WGPUDeviceRef ref( WGPUDevice Device ) { return WGPUDeviceRef( Device ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUInstance>::type, void(*)(WGPUInstance) > WGPUInstanceRef;
-WGPUInstanceRef ref( WGPUInstance Instance ) { return WGPUInstanceRef( Instance, wgpuInstanceRelease ); }
+struct WGPUInstanceRef : public std::shared_ptr< std::remove_pointer<WGPUInstance>::type > {
+    WGPUInstanceRef( WGPUInstance Instance ) : std::shared_ptr< std::remove_pointer<WGPUInstance>::type >( Instance, wgpuInstanceRelease ) {}
+    operator WGPUInstance() const { return get(); }
+};
+WGPUInstanceRef ref( WGPUInstance Instance ) { return WGPUInstanceRef( Instance ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUPipelineLayout>::type, void(*)(WGPUPipelineLayout) > WGPUPipelineLayoutRef;
-WGPUPipelineLayoutRef ref( WGPUPipelineLayout PipelineLayout ) { return WGPUPipelineLayoutRef( PipelineLayout, wgpuPipelineLayoutRelease ); }
+struct WGPUPipelineLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUPipelineLayout>::type > {
+    WGPUPipelineLayoutRef( WGPUPipelineLayout PipelineLayout ) : std::shared_ptr< std::remove_pointer<WGPUPipelineLayout>::type >( PipelineLayout, wgpuPipelineLayoutRelease ) {}
+    operator WGPUPipelineLayout() const { return get(); }
+};
+WGPUPipelineLayoutRef ref( WGPUPipelineLayout PipelineLayout ) { return WGPUPipelineLayoutRef( PipelineLayout ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUQuerySet>::type, void(*)(WGPUQuerySet) > WGPUQuerySetRef;
-WGPUQuerySetRef ref( WGPUQuerySet QuerySet ) { return WGPUQuerySetRef( QuerySet, wgpuQuerySetRelease ); }
+struct WGPUQuerySetRef : public std::shared_ptr< std::remove_pointer<WGPUQuerySet>::type > {
+    WGPUQuerySetRef( WGPUQuerySet QuerySet ) : std::shared_ptr< std::remove_pointer<WGPUQuerySet>::type >( QuerySet, wgpuQuerySetRelease ) {}
+    operator WGPUQuerySet() const { return get(); }
+};
+WGPUQuerySetRef ref( WGPUQuerySet QuerySet ) { return WGPUQuerySetRef( QuerySet ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUQueue>::type, void(*)(WGPUQueue) > WGPUQueueRef;
-WGPUQueueRef ref( WGPUQueue Queue ) { return WGPUQueueRef( Queue, wgpuQueueRelease ); }
+struct WGPUQueueRef : public std::shared_ptr< std::remove_pointer<WGPUQueue>::type > {
+    WGPUQueueRef( WGPUQueue Queue ) : std::shared_ptr< std::remove_pointer<WGPUQueue>::type >( Queue, wgpuQueueRelease ) {}
+    operator WGPUQueue() const { return get(); }
+};
+WGPUQueueRef ref( WGPUQueue Queue ) { return WGPUQueueRef( Queue ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPURenderBundle>::type, void(*)(WGPURenderBundle) > WGPURenderBundleRef;
-WGPURenderBundleRef ref( WGPURenderBundle RenderBundle ) { return WGPURenderBundleRef( RenderBundle, wgpuRenderBundleRelease ); }
+struct WGPURenderBundleRef : public std::shared_ptr< std::remove_pointer<WGPURenderBundle>::type > {
+    WGPURenderBundleRef( WGPURenderBundle RenderBundle ) : std::shared_ptr< std::remove_pointer<WGPURenderBundle>::type >( RenderBundle, wgpuRenderBundleRelease ) {}
+    operator WGPURenderBundle() const { return get(); }
+};
+WGPURenderBundleRef ref( WGPURenderBundle RenderBundle ) { return WGPURenderBundleRef( RenderBundle ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPURenderBundleEncoder>::type, void(*)(WGPURenderBundleEncoder) > WGPURenderBundleEncoderRef;
-WGPURenderBundleEncoderRef ref( WGPURenderBundleEncoder RenderBundleEncoder ) { return WGPURenderBundleEncoderRef( RenderBundleEncoder, wgpuRenderBundleEncoderRelease ); }
+struct WGPURenderBundleEncoderRef : public std::shared_ptr< std::remove_pointer<WGPURenderBundleEncoder>::type > {
+    WGPURenderBundleEncoderRef( WGPURenderBundleEncoder RenderBundleEncoder ) : std::shared_ptr< std::remove_pointer<WGPURenderBundleEncoder>::type >( RenderBundleEncoder, wgpuRenderBundleEncoderRelease ) {}
+    operator WGPURenderBundleEncoder() const { return get(); }
+};
+WGPURenderBundleEncoderRef ref( WGPURenderBundleEncoder RenderBundleEncoder ) { return WGPURenderBundleEncoderRef( RenderBundleEncoder ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPURenderPassEncoder>::type, void(*)(WGPURenderPassEncoder) > WGPURenderPassEncoderRef;
-WGPURenderPassEncoderRef ref( WGPURenderPassEncoder RenderPassEncoder ) { return WGPURenderPassEncoderRef( RenderPassEncoder, wgpuRenderPassEncoderRelease ); }
+struct WGPURenderPassEncoderRef : public std::shared_ptr< std::remove_pointer<WGPURenderPassEncoder>::type > {
+    WGPURenderPassEncoderRef( WGPURenderPassEncoder RenderPassEncoder ) : std::shared_ptr< std::remove_pointer<WGPURenderPassEncoder>::type >( RenderPassEncoder, wgpuRenderPassEncoderRelease ) {}
+    operator WGPURenderPassEncoder() const { return get(); }
+};
+WGPURenderPassEncoderRef ref( WGPURenderPassEncoder RenderPassEncoder ) { return WGPURenderPassEncoderRef( RenderPassEncoder ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPURenderPipeline>::type, void(*)(WGPURenderPipeline) > WGPURenderPipelineRef;
-WGPURenderPipelineRef ref( WGPURenderPipeline RenderPipeline ) { return WGPURenderPipelineRef( RenderPipeline, wgpuRenderPipelineRelease ); }
+struct WGPURenderPipelineRef : public std::shared_ptr< std::remove_pointer<WGPURenderPipeline>::type > {
+    WGPURenderPipelineRef( WGPURenderPipeline RenderPipeline ) : std::shared_ptr< std::remove_pointer<WGPURenderPipeline>::type >( RenderPipeline, wgpuRenderPipelineRelease ) {}
+    operator WGPURenderPipeline() const { return get(); }
+};
+WGPURenderPipelineRef ref( WGPURenderPipeline RenderPipeline ) { return WGPURenderPipelineRef( RenderPipeline ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUSampler>::type, void(*)(WGPUSampler) > WGPUSamplerRef;
-WGPUSamplerRef ref( WGPUSampler Sampler ) { return WGPUSamplerRef( Sampler, wgpuSamplerRelease ); }
+struct WGPUSamplerRef : public std::shared_ptr< std::remove_pointer<WGPUSampler>::type > {
+    WGPUSamplerRef( WGPUSampler Sampler ) : std::shared_ptr< std::remove_pointer<WGPUSampler>::type >( Sampler, wgpuSamplerRelease ) {}
+    operator WGPUSampler() const { return get(); }
+};
+WGPUSamplerRef ref( WGPUSampler Sampler ) { return WGPUSamplerRef( Sampler ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUShaderModule>::type, void(*)(WGPUShaderModule) > WGPUShaderModuleRef;
-WGPUShaderModuleRef ref( WGPUShaderModule ShaderModule ) { return WGPUShaderModuleRef( ShaderModule, wgpuShaderModuleRelease ); }
+struct WGPUShaderModuleRef : public std::shared_ptr< std::remove_pointer<WGPUShaderModule>::type > {
+    WGPUShaderModuleRef( WGPUShaderModule ShaderModule ) : std::shared_ptr< std::remove_pointer<WGPUShaderModule>::type >( ShaderModule, wgpuShaderModuleRelease ) {}
+    operator WGPUShaderModule() const { return get(); }
+};
+WGPUShaderModuleRef ref( WGPUShaderModule ShaderModule ) { return WGPUShaderModuleRef( ShaderModule ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUSurface>::type, void(*)(WGPUSurface) > WGPUSurfaceRef;
-WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface, wgpuSurfaceRelease ); }
+struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>::type > {
+    WGPUSurfaceRef( WGPUSurface Surface ) : std::shared_ptr< std::remove_pointer<WGPUSurface>::type >( Surface, wgpuSurfaceRelease ) {}
+    operator WGPUSurface() const { return get(); }
+};
+WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUTexture>::type, void(*)(WGPUTexture) > WGPUTextureRef;
-WGPUTextureRef ref( WGPUTexture Texture ) { return WGPUTextureRef( Texture, wgpuTextureRelease ); }
+struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
+    WGPUTextureRef( WGPUTexture Texture ) : std::shared_ptr< std::remove_pointer<WGPUTexture>::type >( Texture, wgpuTextureRelease ) {}
+    operator WGPUTexture() const { return get(); }
+};
+WGPUTextureRef ref( WGPUTexture Texture ) { return WGPUTextureRef( Texture ); }
 
-typedef std::unique_ptr< std::remove_pointer<WGPUTextureView>::type, void(*)(WGPUTextureView) > WGPUTextureViewRef;
-WGPUTextureViewRef ref( WGPUTextureView TextureView ) { return WGPUTextureViewRef( TextureView, wgpuTextureViewRelease ); }
+struct WGPUTextureViewRef : public std::shared_ptr< std::remove_pointer<WGPUTextureView>::type > {
+    WGPUTextureViewRef( WGPUTextureView TextureView ) : std::shared_ptr< std::remove_pointer<WGPUTextureView>::type >( TextureView, wgpuTextureViewRelease ) {}
+    operator WGPUTextureView() const { return get(); }
+};
+WGPUTextureViewRef ref( WGPUTextureView TextureView ) { return WGPUTextureViewRef( TextureView ); }
 

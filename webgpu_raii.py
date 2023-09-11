@@ -18,7 +18,12 @@ print("""#pragma once
 #include <memory>
 """)
 
+## From: https://stackoverflow.com/questions/60568363/shared-ptr-custom-deleter
+## From: https://stackoverflow.com/questions/56091228/implicit-conversion-of-stdshared-ptr-to-pointer-type
 for T in types:
-    print( f"typedef std::unique_ptr< std::remove_pointer<WGPU{T}>::type, void(*)(WGPU{T}) > WGPU{T}Ref;" )
-    print( f"WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T}, wgpu{T}Release ); }}" )
+    print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
+    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, wgpu{T}Release ) {{}}
+    operator WGPU{T}() const {{ return get(); }}
+}};""" )
+    print( f"WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
     print()

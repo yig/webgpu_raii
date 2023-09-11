@@ -1,4 +1,4 @@
-A minimal C++ RAII wrapper for WebGPU's C API.
+A minimal C++ RAII wrapper for WebGPU's C API. It's based on `std::shared_ptr`. It is guaranteed correct; the single WebGPU reference count will be managed by the shared pointer, and eventually released.
 
 ## Installation
 
@@ -6,15 +6,26 @@ Copy the `webgpu_raii.h` header next to your code.
 
 ## Usage
 
-Call `ref(...).get()` around something WebGPU gives you that you need to release later. It's based on `std::unique_ptr`, so it's only useful for single-owner scenarios. The type of `ref()`'s return value is `FooRef`, where `Foo` is any type in the WebGPU API that has a `wgpuFooRelease()` function.
+This header is for any type `Foo` in the WebGPU API that has a `wgpuFooRelease()` function.
 
-Example:
+For named values, use `FooRef` instead of `Foo` as the declared type. Everything else is automatic. The `FooRef` will automatically manage the lifetime of the type and call the appropriate release function at the end. For example:
 
+```c++
+WGPUBufferRef = wgpuDeviceCreateBuffer( device, (WGPUBufferDescriptor[]){{
+    .usage = WGPUBufferUsage_CopyDst | WGPUBufferUsage_Vertex,
+    .size = bytes
+    }} );
 ```
+
+The `FooRef` type decays to a plain old `Foo` automatically, so you can pass it to any WebGPU API.
+
+For unnamed (temporary) values, call `ref(...)` around something WebGPU gives you that you need to release later. The type of `ref()`'s return value is `FooRef`. For example:
+
+```c++
 #include "webgpu_raii.h"
 ...
 wgpuDeviceCreateBindGroup( device, (WGPUBindGroupDescriptor[]){{
-    .layout = ref(wgpuRenderPipelineGetBindGroupLayout( pipeline, 0 )).get(),
+    .layout = ref(wgpuRenderPipelineGetBindGroupLayout( pipeline, 0 )),
     .entryCount = 1,
     .entries = (WGPUBindGroupEntry[]){{
         .binding = 0,
@@ -27,6 +38,12 @@ wgpuDeviceCreateBindGroup( device, (WGPUBindGroupDescriptor[]){{
 
 ```
 python3 webgpu_raii.py > webgpu_raii.h
+```
+
+You can optionally pass a path to a `webgpu.h` header:
+
+```
+python3 webgpu_raii.py webgpu.h > webgpu_raii.h
 ```
 
 ## License
