@@ -36,7 +36,7 @@ wgpuDeviceCreateBindGroup( device, (WGPUBindGroupDescriptor[]){{
 
 ## Debugging
 
-If you run into trouble, you can `#define DEBUG_WEBGPU_RAII` and you'll see a print statement with the pointer. The release function won't actually be called, so memory will be leaked instead.
+If you run into trouble, you can `#define WEBGPU_RAII_DEBUG` and you'll see a print statement with the pointer. You can further `#define WEBGPU_RAII_LEAK`, and then the release function won't actually be called. Memory will be leaked instead.
 
 ## Regenerate
 

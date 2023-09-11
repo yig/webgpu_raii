@@ -17,7 +17,7 @@ print("""#pragma once
 #include <webgpu/webgpu.h>
 #include <memory>
 
-#ifdef DEBUG_WEBGPU_RAII
+#ifdef WEBGPU_RAII_DEBUG
 #include <iostream>
 #endif
 """)
@@ -28,9 +28,16 @@ for T in types:
     print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
     WGPU{T}Ref() {{}}
 #ifdef DEBUG_WEBGPU_RAII
-    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n'; }} ) {{}}
+    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{
+        std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
+#ifdef WEBGPU_RAII_LEAK
+        if( {T} ) wgpu{T}Release( {T} );
+#endif
+        }} ) {{
+        std::cout << "Acquired a WGPU{T}: " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
+        }}
 #else
-    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ if( {T} ) wgpu{T}Release; }} ) {{}}
+    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ if( {T} ) wgpu{T}Release( {T} ); }} ) {{}}
 #endif
     operator WGPU{T}() const {{ return get(); }}
 }};""" )
