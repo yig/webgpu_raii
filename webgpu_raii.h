@@ -367,6 +367,24 @@ struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>
 };
 WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
 
+struct WGPUSwapChainRef : public std::shared_ptr< std::remove_pointer<WGPUSwapChain>::type > {
+    WGPUSwapChainRef() {}
+#ifdef WEBGPU_RAII_DEBUG
+    WGPUSwapChainRef( WGPUSwapChain SwapChain ) : std::shared_ptr< std::remove_pointer<WGPUSwapChain>::type >( SwapChain, [](WGPUSwapChain SwapChain){
+        std::cout << "wgpuSwapChainRelease(): " << reinterpret_cast<std::uintptr_t>(SwapChain) << '\n';
+#ifdef WEBGPU_RAII_LEAK
+        if( SwapChain ) wgpuSwapChainRelease( SwapChain );
+#endif
+        } ) {
+        std::cout << "Acquired a WGPUSwapChain: " << reinterpret_cast<std::uintptr_t>(SwapChain) << '\n';
+        }
+#else
+    WGPUSwapChainRef( WGPUSwapChain SwapChain ) : std::shared_ptr< std::remove_pointer<WGPUSwapChain>::type >( SwapChain, [](WGPUSwapChain SwapChain){ if( SwapChain ) wgpuSwapChainRelease( SwapChain ); } ) {}
+#endif
+    operator WGPUSwapChain() const { return get(); }
+};
+WGPUSwapChainRef ref( WGPUSwapChain SwapChain ) { return WGPUSwapChainRef( SwapChain ); }
+
 struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
     WGPUTextureRef() {}
 #ifdef WEBGPU_RAII_DEBUG
