@@ -30,7 +30,7 @@ for T in types:
 #ifdef WEBGPU_RAII_DEBUG
     WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{
         std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( {T} ) wgpu{T}Release( {T} );
 #endif
         }} ) {{

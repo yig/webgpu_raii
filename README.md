@@ -38,6 +38,19 @@ wgpuDeviceCreateBindGroup( device, (WGPUBindGroupDescriptor[]){{
 
 If you run into trouble, you can `#define WEBGPU_RAII_DEBUG` and you'll see a print statement with the pointer. You can further `#define WEBGPU_RAII_LEAK`, and then the release function won't actually be called. Memory will be leaked instead.
 
+## Implementation
+
+The implementation is a simple wrapper around an `std::shared_ptr` with a custom deleter and automatic decaying into a pointer. For every `wgpuFooRelease()` found in `webgpu.h`, the script generates the following code:
+
+```c++
+struct WGPUFooRef : public std::shared_ptr< std::remove_pointer<WGPUFoo>::type > {
+    WGPUFooRef() {}
+    WGPUFooRef( WGPUFoo Foo ) : std::shared_ptr< std::remove_pointer<WGPUFoo>::type >( Foo, [](WGPUFoo Foo){ if( Foo ) wgpuFooRelease( Foo ); } ) {}
+    operator WGPUFoo() const { return get(); }
+};
+WGPUFooRef ref( WGPUFoo Foo ) { return WGPUFooRef( Foo ); }
+```
+
 ## Regenerate
 
 ```

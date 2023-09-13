@@ -12,7 +12,7 @@ struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>
 #ifdef WEBGPU_RAII_DEBUG
     WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, [](WGPUAdapter Adapter){
         std::cout << "wgpuAdapterRelease(): " << reinterpret_cast<std::uintptr_t>(Adapter) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Adapter ) wgpuAdapterRelease( Adapter );
 #endif
         } ) {
@@ -30,7 +30,7 @@ struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGr
 #ifdef WEBGPU_RAII_DEBUG
     WGPUBindGroupRef( WGPUBindGroup BindGroup ) : std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type >( BindGroup, [](WGPUBindGroup BindGroup){
         std::cout << "wgpuBindGroupRelease(): " << reinterpret_cast<std::uintptr_t>(BindGroup) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( BindGroup ) wgpuBindGroupRelease( BindGroup );
 #endif
         } ) {
@@ -48,7 +48,7 @@ struct WGPUBindGroupLayoutRef : public std::shared_ptr< std::remove_pointer<WGPU
 #ifdef WEBGPU_RAII_DEBUG
     WGPUBindGroupLayoutRef( WGPUBindGroupLayout BindGroupLayout ) : std::shared_ptr< std::remove_pointer<WGPUBindGroupLayout>::type >( BindGroupLayout, [](WGPUBindGroupLayout BindGroupLayout){
         std::cout << "wgpuBindGroupLayoutRelease(): " << reinterpret_cast<std::uintptr_t>(BindGroupLayout) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( BindGroupLayout ) wgpuBindGroupLayoutRelease( BindGroupLayout );
 #endif
         } ) {
@@ -66,7 +66,7 @@ struct WGPUBufferRef : public std::shared_ptr< std::remove_pointer<WGPUBuffer>::
 #ifdef WEBGPU_RAII_DEBUG
     WGPUBufferRef( WGPUBuffer Buffer ) : std::shared_ptr< std::remove_pointer<WGPUBuffer>::type >( Buffer, [](WGPUBuffer Buffer){
         std::cout << "wgpuBufferRelease(): " << reinterpret_cast<std::uintptr_t>(Buffer) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Buffer ) wgpuBufferRelease( Buffer );
 #endif
         } ) {
@@ -84,7 +84,7 @@ struct WGPUCommandBufferRef : public std::shared_ptr< std::remove_pointer<WGPUCo
 #ifdef WEBGPU_RAII_DEBUG
     WGPUCommandBufferRef( WGPUCommandBuffer CommandBuffer ) : std::shared_ptr< std::remove_pointer<WGPUCommandBuffer>::type >( CommandBuffer, [](WGPUCommandBuffer CommandBuffer){
         std::cout << "wgpuCommandBufferRelease(): " << reinterpret_cast<std::uintptr_t>(CommandBuffer) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( CommandBuffer ) wgpuCommandBufferRelease( CommandBuffer );
 #endif
         } ) {
@@ -102,7 +102,7 @@ struct WGPUCommandEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUC
 #ifdef WEBGPU_RAII_DEBUG
     WGPUCommandEncoderRef( WGPUCommandEncoder CommandEncoder ) : std::shared_ptr< std::remove_pointer<WGPUCommandEncoder>::type >( CommandEncoder, [](WGPUCommandEncoder CommandEncoder){
         std::cout << "wgpuCommandEncoderRelease(): " << reinterpret_cast<std::uintptr_t>(CommandEncoder) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( CommandEncoder ) wgpuCommandEncoderRelease( CommandEncoder );
 #endif
         } ) {
@@ -120,7 +120,7 @@ struct WGPUComputePassEncoderRef : public std::shared_ptr< std::remove_pointer<W
 #ifdef WEBGPU_RAII_DEBUG
     WGPUComputePassEncoderRef( WGPUComputePassEncoder ComputePassEncoder ) : std::shared_ptr< std::remove_pointer<WGPUComputePassEncoder>::type >( ComputePassEncoder, [](WGPUComputePassEncoder ComputePassEncoder){
         std::cout << "wgpuComputePassEncoderRelease(): " << reinterpret_cast<std::uintptr_t>(ComputePassEncoder) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( ComputePassEncoder ) wgpuComputePassEncoderRelease( ComputePassEncoder );
 #endif
         } ) {
@@ -138,7 +138,7 @@ struct WGPUComputePipelineRef : public std::shared_ptr< std::remove_pointer<WGPU
 #ifdef WEBGPU_RAII_DEBUG
     WGPUComputePipelineRef( WGPUComputePipeline ComputePipeline ) : std::shared_ptr< std::remove_pointer<WGPUComputePipeline>::type >( ComputePipeline, [](WGPUComputePipeline ComputePipeline){
         std::cout << "wgpuComputePipelineRelease(): " << reinterpret_cast<std::uintptr_t>(ComputePipeline) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( ComputePipeline ) wgpuComputePipelineRelease( ComputePipeline );
 #endif
         } ) {
@@ -156,7 +156,7 @@ struct WGPUDeviceRef : public std::shared_ptr< std::remove_pointer<WGPUDevice>::
 #ifdef WEBGPU_RAII_DEBUG
     WGPUDeviceRef( WGPUDevice Device ) : std::shared_ptr< std::remove_pointer<WGPUDevice>::type >( Device, [](WGPUDevice Device){
         std::cout << "wgpuDeviceRelease(): " << reinterpret_cast<std::uintptr_t>(Device) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Device ) wgpuDeviceRelease( Device );
 #endif
         } ) {
@@ -174,7 +174,7 @@ struct WGPUInstanceRef : public std::shared_ptr< std::remove_pointer<WGPUInstanc
 #ifdef WEBGPU_RAII_DEBUG
     WGPUInstanceRef( WGPUInstance Instance ) : std::shared_ptr< std::remove_pointer<WGPUInstance>::type >( Instance, [](WGPUInstance Instance){
         std::cout << "wgpuInstanceRelease(): " << reinterpret_cast<std::uintptr_t>(Instance) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Instance ) wgpuInstanceRelease( Instance );
 #endif
         } ) {
@@ -192,7 +192,7 @@ struct WGPUPipelineLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUP
 #ifdef WEBGPU_RAII_DEBUG
     WGPUPipelineLayoutRef( WGPUPipelineLayout PipelineLayout ) : std::shared_ptr< std::remove_pointer<WGPUPipelineLayout>::type >( PipelineLayout, [](WGPUPipelineLayout PipelineLayout){
         std::cout << "wgpuPipelineLayoutRelease(): " << reinterpret_cast<std::uintptr_t>(PipelineLayout) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( PipelineLayout ) wgpuPipelineLayoutRelease( PipelineLayout );
 #endif
         } ) {
@@ -210,7 +210,7 @@ struct WGPUQuerySetRef : public std::shared_ptr< std::remove_pointer<WGPUQuerySe
 #ifdef WEBGPU_RAII_DEBUG
     WGPUQuerySetRef( WGPUQuerySet QuerySet ) : std::shared_ptr< std::remove_pointer<WGPUQuerySet>::type >( QuerySet, [](WGPUQuerySet QuerySet){
         std::cout << "wgpuQuerySetRelease(): " << reinterpret_cast<std::uintptr_t>(QuerySet) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( QuerySet ) wgpuQuerySetRelease( QuerySet );
 #endif
         } ) {
@@ -228,7 +228,7 @@ struct WGPUQueueRef : public std::shared_ptr< std::remove_pointer<WGPUQueue>::ty
 #ifdef WEBGPU_RAII_DEBUG
     WGPUQueueRef( WGPUQueue Queue ) : std::shared_ptr< std::remove_pointer<WGPUQueue>::type >( Queue, [](WGPUQueue Queue){
         std::cout << "wgpuQueueRelease(): " << reinterpret_cast<std::uintptr_t>(Queue) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Queue ) wgpuQueueRelease( Queue );
 #endif
         } ) {
@@ -246,7 +246,7 @@ struct WGPURenderBundleRef : public std::shared_ptr< std::remove_pointer<WGPURen
 #ifdef WEBGPU_RAII_DEBUG
     WGPURenderBundleRef( WGPURenderBundle RenderBundle ) : std::shared_ptr< std::remove_pointer<WGPURenderBundle>::type >( RenderBundle, [](WGPURenderBundle RenderBundle){
         std::cout << "wgpuRenderBundleRelease(): " << reinterpret_cast<std::uintptr_t>(RenderBundle) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( RenderBundle ) wgpuRenderBundleRelease( RenderBundle );
 #endif
         } ) {
@@ -264,7 +264,7 @@ struct WGPURenderBundleEncoderRef : public std::shared_ptr< std::remove_pointer<
 #ifdef WEBGPU_RAII_DEBUG
     WGPURenderBundleEncoderRef( WGPURenderBundleEncoder RenderBundleEncoder ) : std::shared_ptr< std::remove_pointer<WGPURenderBundleEncoder>::type >( RenderBundleEncoder, [](WGPURenderBundleEncoder RenderBundleEncoder){
         std::cout << "wgpuRenderBundleEncoderRelease(): " << reinterpret_cast<std::uintptr_t>(RenderBundleEncoder) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( RenderBundleEncoder ) wgpuRenderBundleEncoderRelease( RenderBundleEncoder );
 #endif
         } ) {
@@ -282,7 +282,7 @@ struct WGPURenderPassEncoderRef : public std::shared_ptr< std::remove_pointer<WG
 #ifdef WEBGPU_RAII_DEBUG
     WGPURenderPassEncoderRef( WGPURenderPassEncoder RenderPassEncoder ) : std::shared_ptr< std::remove_pointer<WGPURenderPassEncoder>::type >( RenderPassEncoder, [](WGPURenderPassEncoder RenderPassEncoder){
         std::cout << "wgpuRenderPassEncoderRelease(): " << reinterpret_cast<std::uintptr_t>(RenderPassEncoder) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( RenderPassEncoder ) wgpuRenderPassEncoderRelease( RenderPassEncoder );
 #endif
         } ) {
@@ -300,7 +300,7 @@ struct WGPURenderPipelineRef : public std::shared_ptr< std::remove_pointer<WGPUR
 #ifdef WEBGPU_RAII_DEBUG
     WGPURenderPipelineRef( WGPURenderPipeline RenderPipeline ) : std::shared_ptr< std::remove_pointer<WGPURenderPipeline>::type >( RenderPipeline, [](WGPURenderPipeline RenderPipeline){
         std::cout << "wgpuRenderPipelineRelease(): " << reinterpret_cast<std::uintptr_t>(RenderPipeline) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( RenderPipeline ) wgpuRenderPipelineRelease( RenderPipeline );
 #endif
         } ) {
@@ -318,7 +318,7 @@ struct WGPUSamplerRef : public std::shared_ptr< std::remove_pointer<WGPUSampler>
 #ifdef WEBGPU_RAII_DEBUG
     WGPUSamplerRef( WGPUSampler Sampler ) : std::shared_ptr< std::remove_pointer<WGPUSampler>::type >( Sampler, [](WGPUSampler Sampler){
         std::cout << "wgpuSamplerRelease(): " << reinterpret_cast<std::uintptr_t>(Sampler) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Sampler ) wgpuSamplerRelease( Sampler );
 #endif
         } ) {
@@ -336,7 +336,7 @@ struct WGPUShaderModuleRef : public std::shared_ptr< std::remove_pointer<WGPUSha
 #ifdef WEBGPU_RAII_DEBUG
     WGPUShaderModuleRef( WGPUShaderModule ShaderModule ) : std::shared_ptr< std::remove_pointer<WGPUShaderModule>::type >( ShaderModule, [](WGPUShaderModule ShaderModule){
         std::cout << "wgpuShaderModuleRelease(): " << reinterpret_cast<std::uintptr_t>(ShaderModule) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( ShaderModule ) wgpuShaderModuleRelease( ShaderModule );
 #endif
         } ) {
@@ -354,7 +354,7 @@ struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>
 #ifdef WEBGPU_RAII_DEBUG
     WGPUSurfaceRef( WGPUSurface Surface ) : std::shared_ptr< std::remove_pointer<WGPUSurface>::type >( Surface, [](WGPUSurface Surface){
         std::cout << "wgpuSurfaceRelease(): " << reinterpret_cast<std::uintptr_t>(Surface) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Surface ) wgpuSurfaceRelease( Surface );
 #endif
         } ) {
@@ -372,7 +372,7 @@ struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>
 #ifdef WEBGPU_RAII_DEBUG
     WGPUTextureRef( WGPUTexture Texture ) : std::shared_ptr< std::remove_pointer<WGPUTexture>::type >( Texture, [](WGPUTexture Texture){
         std::cout << "wgpuTextureRelease(): " << reinterpret_cast<std::uintptr_t>(Texture) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( Texture ) wgpuTextureRelease( Texture );
 #endif
         } ) {
@@ -390,7 +390,7 @@ struct WGPUTextureViewRef : public std::shared_ptr< std::remove_pointer<WGPUText
 #ifdef WEBGPU_RAII_DEBUG
     WGPUTextureViewRef( WGPUTextureView TextureView ) : std::shared_ptr< std::remove_pointer<WGPUTextureView>::type >( TextureView, [](WGPUTextureView TextureView){
         std::cout << "wgpuTextureViewRelease(): " << reinterpret_cast<std::uintptr_t>(TextureView) << '\n';
-#ifdef WEBGPU_RAII_LEAK
+#ifndef WEBGPU_RAII_LEAK
         if( TextureView ) wgpuTextureViewRelease( TextureView );
 #endif
         } ) {
