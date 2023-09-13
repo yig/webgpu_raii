@@ -63,7 +63,7 @@ You can optionally pass a path to a `webgpu.h` header:
 python3 webgpu_raii.py webgpu.h > webgpu_raii.h
 ```
 
-This may be necessary if your `webgpu.h` header differs from the one provided. For example, the one provided doesn't have `wgpuSwapChainRelease()`, but [wgpu-native](https://github.com/gfx-rs/wgpu-native)'s [`webgpu.h`](https://github.com/webgpu-native/webgpu-headers/blob/8e9025e0fa4b33d5e7cc682b7604b021b29f36c6/webgpu.h) does.
+This may be necessary if your `webgpu.h` header differs from the one provided. For example, the `webgpu_raii.h` provided in the `main` branch of this repository doesn't have `wgpuSwapChainRelease()`, but [wgpu-native](https://github.com/gfx-rs/wgpu-native)'s [`webgpu.h`](https://github.com/webgpu-native/webgpu-headers/blob/8e9025e0fa4b33d5e7cc682b7604b021b29f36c6/webgpu.h) does. The `webgpu_raii.h` matching `wgpu-native`'s `webgpu.h` is in the `wgpu-native` branch of this repository.
 
 ## License
 
