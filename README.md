@@ -11,7 +11,7 @@ This header is for any type `Foo` in the WebGPU API that has a `wgpuFooRelease()
 For named values, use `FooRef` instead of `Foo` as the declared type. Everything else is automatic. The `FooRef` will automatically manage the lifetime of the type and call the appropriate release function at the end. For example:
 
 ```c++
-WGPUBufferRef = wgpuDeviceCreateBuffer( device, (WGPUBufferDescriptor[]){{
+WGPUBufferRef buffer = wgpuDeviceCreateBuffer( device, (WGPUBufferDescriptor[]){{
     .usage = WGPUBufferUsage_CopyDst | WGPUBufferUsage_Vertex,
     .size = bytes
     }} );
