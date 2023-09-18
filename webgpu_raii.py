@@ -41,5 +41,5 @@ for T in types:
 #endif
     operator WGPU{T}() const {{ return get(); }}
 }};""" )
-    print( f"WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
+    print( f"inline WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
     print()
