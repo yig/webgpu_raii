@@ -23,7 +23,7 @@ struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>
 #endif
     operator WGPUAdapter() const { return get(); }
 };
-WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
+inline WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
 
 struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type > {
     WGPUBindGroupRef() {}
@@ -41,7 +41,7 @@ struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGr
 #endif
     operator WGPUBindGroup() const { return get(); }
 };
-WGPUBindGroupRef ref( WGPUBindGroup BindGroup ) { return WGPUBindGroupRef( BindGroup ); }
+inline WGPUBindGroupRef ref( WGPUBindGroup BindGroup ) { return WGPUBindGroupRef( BindGroup ); }
 
 struct WGPUBindGroupLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroupLayout>::type > {
     WGPUBindGroupLayoutRef() {}
@@ -59,7 +59,7 @@ struct WGPUBindGroupLayoutRef : public std::shared_ptr< std::remove_pointer<WGPU
 #endif
     operator WGPUBindGroupLayout() const { return get(); }
 };
-WGPUBindGroupLayoutRef ref( WGPUBindGroupLayout BindGroupLayout ) { return WGPUBindGroupLayoutRef( BindGroupLayout ); }
+inline WGPUBindGroupLayoutRef ref( WGPUBindGroupLayout BindGroupLayout ) { return WGPUBindGroupLayoutRef( BindGroupLayout ); }
 
 struct WGPUBufferRef : public std::shared_ptr< std::remove_pointer<WGPUBuffer>::type > {
     WGPUBufferRef() {}
@@ -77,7 +77,7 @@ struct WGPUBufferRef : public std::shared_ptr< std::remove_pointer<WGPUBuffer>::
 #endif
     operator WGPUBuffer() const { return get(); }
 };
-WGPUBufferRef ref( WGPUBuffer Buffer ) { return WGPUBufferRef( Buffer ); }
+inline WGPUBufferRef ref( WGPUBuffer Buffer ) { return WGPUBufferRef( Buffer ); }
 
 struct WGPUCommandBufferRef : public std::shared_ptr< std::remove_pointer<WGPUCommandBuffer>::type > {
     WGPUCommandBufferRef() {}
@@ -95,7 +95,7 @@ struct WGPUCommandBufferRef : public std::shared_ptr< std::remove_pointer<WGPUCo
 #endif
     operator WGPUCommandBuffer() const { return get(); }
 };
-WGPUCommandBufferRef ref( WGPUCommandBuffer CommandBuffer ) { return WGPUCommandBufferRef( CommandBuffer ); }
+inline WGPUCommandBufferRef ref( WGPUCommandBuffer CommandBuffer ) { return WGPUCommandBufferRef( CommandBuffer ); }
 
 struct WGPUCommandEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUCommandEncoder>::type > {
     WGPUCommandEncoderRef() {}
@@ -113,7 +113,7 @@ struct WGPUCommandEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUC
 #endif
     operator WGPUCommandEncoder() const { return get(); }
 };
-WGPUCommandEncoderRef ref( WGPUCommandEncoder CommandEncoder ) { return WGPUCommandEncoderRef( CommandEncoder ); }
+inline WGPUCommandEncoderRef ref( WGPUCommandEncoder CommandEncoder ) { return WGPUCommandEncoderRef( CommandEncoder ); }
 
 struct WGPUComputePassEncoderRef : public std::shared_ptr< std::remove_pointer<WGPUComputePassEncoder>::type > {
     WGPUComputePassEncoderRef() {}
@@ -131,7 +131,7 @@ struct WGPUComputePassEncoderRef : public std::shared_ptr< std::remove_pointer<W
 #endif
     operator WGPUComputePassEncoder() const { return get(); }
 };
-WGPUComputePassEncoderRef ref( WGPUComputePassEncoder ComputePassEncoder ) { return WGPUComputePassEncoderRef( ComputePassEncoder ); }
+inline WGPUComputePassEncoderRef ref( WGPUComputePassEncoder ComputePassEncoder ) { return WGPUComputePassEncoderRef( ComputePassEncoder ); }
 
 struct WGPUComputePipelineRef : public std::shared_ptr< std::remove_pointer<WGPUComputePipeline>::type > {
     WGPUComputePipelineRef() {}
@@ -149,7 +149,7 @@ struct WGPUComputePipelineRef : public std::shared_ptr< std::remove_pointer<WGPU
 #endif
     operator WGPUComputePipeline() const { return get(); }
 };
-WGPUComputePipelineRef ref( WGPUComputePipeline ComputePipeline ) { return WGPUComputePipelineRef( ComputePipeline ); }
+inline WGPUComputePipelineRef ref( WGPUComputePipeline ComputePipeline ) { return WGPUComputePipelineRef( ComputePipeline ); }
 
 struct WGPUDeviceRef : public std::shared_ptr< std::remove_pointer<WGPUDevice>::type > {
     WGPUDeviceRef() {}
@@ -167,7 +167,7 @@ struct WGPUDeviceRef : public std::shared_ptr< std::remove_pointer<WGPUDevice>::
 #endif
     operator WGPUDevice() const { return get(); }
 };
-WGPUDeviceRef ref( WGPUDevice Device ) { return WGPUDeviceRef( Device ); }
+inline WGPUDeviceRef ref( WGPUDevice Device ) { return WGPUDeviceRef( Device ); }
 
 struct WGPUInstanceRef : public std::shared_ptr< std::remove_pointer<WGPUInstance>::type > {
     WGPUInstanceRef() {}
@@ -185,7 +185,7 @@ struct WGPUInstanceRef : public std::shared_ptr< std::remove_pointer<WGPUInstanc
 #endif
     operator WGPUInstance() const { return get(); }
 };
-WGPUInstanceRef ref( WGPUInstance Instance ) { return WGPUInstanceRef( Instance ); }
+inline WGPUInstanceRef ref( WGPUInstance Instance ) { return WGPUInstanceRef( Instance ); }
 
 struct WGPUPipelineLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUPipelineLayout>::type > {
     WGPUPipelineLayoutRef() {}
@@ -203,7 +203,7 @@ struct WGPUPipelineLayoutRef : public std::shared_ptr< std::remove_pointer<WGPUP
 #endif
     operator WGPUPipelineLayout() const { return get(); }
 };
-WGPUPipelineLayoutRef ref( WGPUPipelineLayout PipelineLayout ) { return WGPUPipelineLayoutRef( PipelineLayout ); }
+inline WGPUPipelineLayoutRef ref( WGPUPipelineLayout PipelineLayout ) { return WGPUPipelineLayoutRef( PipelineLayout ); }
 
 struct WGPUQuerySetRef : public std::shared_ptr< std::remove_pointer<WGPUQuerySet>::type > {
     WGPUQuerySetRef() {}
@@ -221,7 +221,7 @@ struct WGPUQuerySetRef : public std::shared_ptr< std::remove_pointer<WGPUQuerySe
 #endif
     operator WGPUQuerySet() const { return get(); }
 };
-WGPUQuerySetRef ref( WGPUQuerySet QuerySet ) { return WGPUQuerySetRef( QuerySet ); }
+inline WGPUQuerySetRef ref( WGPUQuerySet QuerySet ) { return WGPUQuerySetRef( QuerySet ); }
 
 struct WGPUQueueRef : public std::shared_ptr< std::remove_pointer<WGPUQueue>::type > {
     WGPUQueueRef() {}
@@ -239,7 +239,7 @@ struct WGPUQueueRef : public std::shared_ptr< std::remove_pointer<WGPUQueue>::ty
 #endif
     operator WGPUQueue() const { return get(); }
 };
-WGPUQueueRef ref( WGPUQueue Queue ) { return WGPUQueueRef( Queue ); }
+inline WGPUQueueRef ref( WGPUQueue Queue ) { return WGPUQueueRef( Queue ); }
 
 struct WGPURenderBundleRef : public std::shared_ptr< std::remove_pointer<WGPURenderBundle>::type > {
     WGPURenderBundleRef() {}
@@ -257,7 +257,7 @@ struct WGPURenderBundleRef : public std::shared_ptr< std::remove_pointer<WGPURen
 #endif
     operator WGPURenderBundle() const { return get(); }
 };
-WGPURenderBundleRef ref( WGPURenderBundle RenderBundle ) { return WGPURenderBundleRef( RenderBundle ); }
+inline WGPURenderBundleRef ref( WGPURenderBundle RenderBundle ) { return WGPURenderBundleRef( RenderBundle ); }
 
 struct WGPURenderBundleEncoderRef : public std::shared_ptr< std::remove_pointer<WGPURenderBundleEncoder>::type > {
     WGPURenderBundleEncoderRef() {}
@@ -275,7 +275,7 @@ struct WGPURenderBundleEncoderRef : public std::shared_ptr< std::remove_pointer<
 #endif
     operator WGPURenderBundleEncoder() const { return get(); }
 };
-WGPURenderBundleEncoderRef ref( WGPURenderBundleEncoder RenderBundleEncoder ) { return WGPURenderBundleEncoderRef( RenderBundleEncoder ); }
+inline WGPURenderBundleEncoderRef ref( WGPURenderBundleEncoder RenderBundleEncoder ) { return WGPURenderBundleEncoderRef( RenderBundleEncoder ); }
 
 struct WGPURenderPassEncoderRef : public std::shared_ptr< std::remove_pointer<WGPURenderPassEncoder>::type > {
     WGPURenderPassEncoderRef() {}
@@ -293,7 +293,7 @@ struct WGPURenderPassEncoderRef : public std::shared_ptr< std::remove_pointer<WG
 #endif
     operator WGPURenderPassEncoder() const { return get(); }
 };
-WGPURenderPassEncoderRef ref( WGPURenderPassEncoder RenderPassEncoder ) { return WGPURenderPassEncoderRef( RenderPassEncoder ); }
+inline WGPURenderPassEncoderRef ref( WGPURenderPassEncoder RenderPassEncoder ) { return WGPURenderPassEncoderRef( RenderPassEncoder ); }
 
 struct WGPURenderPipelineRef : public std::shared_ptr< std::remove_pointer<WGPURenderPipeline>::type > {
     WGPURenderPipelineRef() {}
@@ -311,7 +311,7 @@ struct WGPURenderPipelineRef : public std::shared_ptr< std::remove_pointer<WGPUR
 #endif
     operator WGPURenderPipeline() const { return get(); }
 };
-WGPURenderPipelineRef ref( WGPURenderPipeline RenderPipeline ) { return WGPURenderPipelineRef( RenderPipeline ); }
+inline WGPURenderPipelineRef ref( WGPURenderPipeline RenderPipeline ) { return WGPURenderPipelineRef( RenderPipeline ); }
 
 struct WGPUSamplerRef : public std::shared_ptr< std::remove_pointer<WGPUSampler>::type > {
     WGPUSamplerRef() {}
@@ -329,7 +329,7 @@ struct WGPUSamplerRef : public std::shared_ptr< std::remove_pointer<WGPUSampler>
 #endif
     operator WGPUSampler() const { return get(); }
 };
-WGPUSamplerRef ref( WGPUSampler Sampler ) { return WGPUSamplerRef( Sampler ); }
+inline WGPUSamplerRef ref( WGPUSampler Sampler ) { return WGPUSamplerRef( Sampler ); }
 
 struct WGPUShaderModuleRef : public std::shared_ptr< std::remove_pointer<WGPUShaderModule>::type > {
     WGPUShaderModuleRef() {}
@@ -347,7 +347,7 @@ struct WGPUShaderModuleRef : public std::shared_ptr< std::remove_pointer<WGPUSha
 #endif
     operator WGPUShaderModule() const { return get(); }
 };
-WGPUShaderModuleRef ref( WGPUShaderModule ShaderModule ) { return WGPUShaderModuleRef( ShaderModule ); }
+inline WGPUShaderModuleRef ref( WGPUShaderModule ShaderModule ) { return WGPUShaderModuleRef( ShaderModule ); }
 
 struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>::type > {
     WGPUSurfaceRef() {}
@@ -365,7 +365,7 @@ struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>
 #endif
     operator WGPUSurface() const { return get(); }
 };
-WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
+inline WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
 
 struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
     WGPUTextureRef() {}
@@ -383,7 +383,7 @@ struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>
 #endif
     operator WGPUTexture() const { return get(); }
 };
-WGPUTextureRef ref( WGPUTexture Texture ) { return WGPUTextureRef( Texture ); }
+inline WGPUTextureRef ref( WGPUTexture Texture ) { return WGPUTextureRef( Texture ); }
 
 struct WGPUTextureViewRef : public std::shared_ptr< std::remove_pointer<WGPUTextureView>::type > {
     WGPUTextureViewRef() {}
@@ -401,5 +401,5 @@ struct WGPUTextureViewRef : public std::shared_ptr< std::remove_pointer<WGPUText
 #endif
     operator WGPUTextureView() const { return get(); }
 };
-WGPUTextureViewRef ref( WGPUTextureView TextureView ) { return WGPUTextureViewRef( TextureView ); }
+inline WGPUTextureViewRef ref( WGPUTextureView TextureView ) { return WGPUTextureViewRef( TextureView ); }
 
