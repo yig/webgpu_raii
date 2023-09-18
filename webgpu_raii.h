@@ -383,7 +383,7 @@ struct WGPUSwapChainRef : public std::shared_ptr< std::remove_pointer<WGPUSwapCh
 #endif
     operator WGPUSwapChain() const { return get(); }
 };
-WGPUSwapChainRef ref( WGPUSwapChain SwapChain ) { return WGPUSwapChainRef( SwapChain ); }
+inline WGPUSwapChainRef ref( WGPUSwapChain SwapChain ) { return WGPUSwapChainRef( SwapChain ); }
 
 struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
     WGPUTextureRef() {}
