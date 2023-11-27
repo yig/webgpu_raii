@@ -14,6 +14,10 @@ for match in re.finditer( 'WGPU_EXPORT void wgpu([A-Za-z]+)Release\(WGPU([A-Za-z
 
 print("""#pragma once
 
+// Author: Yotam Gingold <yotam@yotamgingold.com>
+// License: CC0
+// URL: <https://github.com/yig/webgpu_raii/>
+
 #include <webgpu/webgpu.h>
 #include <memory>
 

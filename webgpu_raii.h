@@ -1,5 +1,9 @@
 #pragma once
 
+// Author: Yotam Gingold <yotam@yotamgingold.com>
+// License: CC0
+// URL: <https://github.com/yig/webgpu_raii/>
+
 #include <webgpu/webgpu.h>
 #include <memory>
 
