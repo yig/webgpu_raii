@@ -7,7 +7,7 @@ webgpu_h = open( webgpu_h_path, 'r' ).read()
 
 types = []
 
-for match in re.finditer( 'WGPU_EXPORT void wgpu([A-Za-z]+)Release\(WGPU([A-Za-z]+) [A-Za-z]+\) WGPU_FUNCTION_ATTRIBUTE;', webgpu_h ):
+for match in re.finditer( r'WGPU_EXPORT void wgpu([A-Za-z]+)Release\(WGPU([A-Za-z]+) [A-Za-z]+\) WGPU_FUNCTION_ATTRIBUTE;', webgpu_h ):
     assert match.group(1) == match.group(2)
     
     types.append( match.group(1) )
