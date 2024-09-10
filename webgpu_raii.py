@@ -31,21 +31,54 @@ print("""#pragma once
 ## From: https://stackoverflow.com/questions/60568363/shared-ptr-custom-deleter
 ## From: https://stackoverflow.com/questions/56091228/implicit-conversion-of-stdshared-ptr-to-pointer-type
 for T, Release in types:
-    print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
-    WGPU{T}Ref() {{}}
-#ifdef WEBGPU_RAII_DEBUG
-    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{
-        std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
-#ifndef WEBGPU_RAII_LEAK
-        if( {T} ) wgpu{T}Release( {T} );
-#endif
-        }} ) {{
-        std::cout << "Acquired a WGPU{T}: " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
+    ## If the release function is 'Release', it's actually a pointer.
+    if Release == 'Release':
+        print( f"""struct WGPU{T}Ref : public std::shared_ptr< std::remove_pointer<WGPU{T}>::type > {{
+        WGPU{T}Ref() {{}}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{
+            std::cout << "wgpu{T}Release(): " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( {T} ) wgpu{T}Release( {T} );
+    #endif
+            }} ) {{
+            std::cout << "Acquired a WGPU{T}: " << reinterpret_cast<std::uintptr_t>({T}) << '\\n';
+            }}
+    #else
+        WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ if( {T} ) wgpu{T}Release( {T} ); }} ) {{}}
+    #endif
+        operator WGPU{T}() const {{ return get(); }}
+    }};""" )
+        print( f"inline WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
+    ## If the release function is 'FreeMembers', it's a struct.
+    elif Release == 'FreeMembers':
+        print( f"""struct WGPU{T}Ref : public WGPU{T} {{
+        // A constructor to zero initialize the struct.
+        WGPU{T}Ref() : WGPU{T}{{}} {{
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPU{T}: " << reinterpret_cast<std::uintptr_t>( this ) << '\\n';
+    #endif
         }}
-#else
-    WGPU{T}Ref( WGPU{T} {T} ) : std::shared_ptr< std::remove_pointer<WGPU{T}>::type >( {T}, [](WGPU{T} {T}){{ if( {T} ) wgpu{T}{Release}( {T} ); }} ) {{}}
-#endif
-    operator WGPU{T}() const {{ return get(); }}
-}};""" )
-    print( f"inline WGPU{T}Ref ref( WGPU{T} {T} ) {{ return WGPU{T}Ref( {T} ); }}" )
+        
+        // No copying.
+        WGPU{T}Ref( const WGPU{T}Ref& ) = delete;
+        WGPU{T}Ref& operator=( const WGPU{T}Ref& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPU{T}Ref() {{
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpu{T}FreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpu{T}FreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPU{T}*>(this) = WGPU{T}{{}};
+    #endif
+    #else
+            wgpu{T}FreeMembers( *this );
+    #endif
+        }}
+    }};""" )
+    else:
+        print( f'WARNING: Unknown release function "{Release}" for type "{T}"', file = sys.stderr )
+    
     print()
