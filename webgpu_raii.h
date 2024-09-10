@@ -29,6 +29,24 @@ struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>
 };
 inline WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
 
+struct WGPUAdapterInfoRef : public std::shared_ptr< std::remove_pointer<WGPUAdapterInfo>::type > {
+    WGPUAdapterInfoRef() {}
+#ifdef WEBGPU_RAII_DEBUG
+    WGPUAdapterInfoRef( WGPUAdapterInfo AdapterInfo ) : std::shared_ptr< std::remove_pointer<WGPUAdapterInfo>::type >( AdapterInfo, [](WGPUAdapterInfo AdapterInfo){
+        std::cout << "wgpuAdapterInfoRelease(): " << reinterpret_cast<std::uintptr_t>(AdapterInfo) << '\n';
+#ifndef WEBGPU_RAII_LEAK
+        if( AdapterInfo ) wgpuAdapterInfoRelease( AdapterInfo );
+#endif
+        } ) {
+        std::cout << "Acquired a WGPUAdapterInfo: " << reinterpret_cast<std::uintptr_t>(AdapterInfo) << '\n';
+        }
+#else
+    WGPUAdapterInfoRef( WGPUAdapterInfo AdapterInfo ) : std::shared_ptr< std::remove_pointer<WGPUAdapterInfo>::type >( AdapterInfo, [](WGPUAdapterInfo AdapterInfo){ if( AdapterInfo ) wgpuAdapterInfoFreeMembers( AdapterInfo ); } ) {}
+#endif
+    operator WGPUAdapterInfo() const { return get(); }
+};
+inline WGPUAdapterInfoRef ref( WGPUAdapterInfo AdapterInfo ) { return WGPUAdapterInfoRef( AdapterInfo ); }
+
 struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type > {
     WGPUBindGroupRef() {}
 #ifdef WEBGPU_RAII_DEBUG
@@ -370,6 +388,24 @@ struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>
     operator WGPUSurface() const { return get(); }
 };
 inline WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
+
+struct WGPUSurfaceCapabilitiesRef : public std::shared_ptr< std::remove_pointer<WGPUSurfaceCapabilities>::type > {
+    WGPUSurfaceCapabilitiesRef() {}
+#ifdef WEBGPU_RAII_DEBUG
+    WGPUSurfaceCapabilitiesRef( WGPUSurfaceCapabilities SurfaceCapabilities ) : std::shared_ptr< std::remove_pointer<WGPUSurfaceCapabilities>::type >( SurfaceCapabilities, [](WGPUSurfaceCapabilities SurfaceCapabilities){
+        std::cout << "wgpuSurfaceCapabilitiesRelease(): " << reinterpret_cast<std::uintptr_t>(SurfaceCapabilities) << '\n';
+#ifndef WEBGPU_RAII_LEAK
+        if( SurfaceCapabilities ) wgpuSurfaceCapabilitiesRelease( SurfaceCapabilities );
+#endif
+        } ) {
+        std::cout << "Acquired a WGPUSurfaceCapabilities: " << reinterpret_cast<std::uintptr_t>(SurfaceCapabilities) << '\n';
+        }
+#else
+    WGPUSurfaceCapabilitiesRef( WGPUSurfaceCapabilities SurfaceCapabilities ) : std::shared_ptr< std::remove_pointer<WGPUSurfaceCapabilities>::type >( SurfaceCapabilities, [](WGPUSurfaceCapabilities SurfaceCapabilities){ if( SurfaceCapabilities ) wgpuSurfaceCapabilitiesFreeMembers( SurfaceCapabilities ); } ) {}
+#endif
+    operator WGPUSurfaceCapabilities() const { return get(); }
+};
+inline WGPUSurfaceCapabilitiesRef ref( WGPUSurfaceCapabilities SurfaceCapabilities ) { return WGPUSurfaceCapabilitiesRef( SurfaceCapabilities ); }
 
 struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
     WGPUTextureRef() {}
