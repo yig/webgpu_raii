@@ -11,24 +11,6 @@
 #include <iostream>
 #endif
 
-struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>::type > {
-        WGPUAdapterRef() {}
-    #ifdef WEBGPU_RAII_DEBUG
-        WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, [](WGPUAdapter Adapter){
-            std::cout << "wgpuAdapterRelease(): " << reinterpret_cast<std::uintptr_t>(Adapter) << '\n';
-    #ifndef WEBGPU_RAII_LEAK
-            if( Adapter ) wgpuAdapterRelease( Adapter );
-    #endif
-            } ) {
-            std::cout << "Acquired a WGPUAdapter: " << reinterpret_cast<std::uintptr_t>(Adapter) << '\n';
-            }
-    #else
-        WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, [](WGPUAdapter Adapter){ if( Adapter ) wgpuAdapterRelease( Adapter ); } ) {}
-    #endif
-        operator WGPUAdapter() const { return get(); }
-    };
-inline WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
-
 struct WGPUAdapterInfoRef : public WGPUAdapterInfo {
         // A constructor to zero initialize the struct.
         WGPUAdapterInfoRef() : WGPUAdapterInfo{} {
@@ -55,6 +37,240 @@ struct WGPUAdapterInfoRef : public WGPUAdapterInfo {
     #endif
         }
     };
+
+struct WGPUAdapterPropertiesMemoryHeapsRef : public WGPUAdapterPropertiesMemoryHeaps {
+        // A constructor to zero initialize the struct.
+        WGPUAdapterPropertiesMemoryHeapsRef() : WGPUAdapterPropertiesMemoryHeaps{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUAdapterPropertiesMemoryHeaps: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUAdapterPropertiesMemoryHeapsRef( const WGPUAdapterPropertiesMemoryHeapsRef& ) = delete;
+        WGPUAdapterPropertiesMemoryHeapsRef& operator=( const WGPUAdapterPropertiesMemoryHeapsRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUAdapterPropertiesMemoryHeapsRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuAdapterPropertiesMemoryHeapsFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuAdapterPropertiesMemoryHeapsFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUAdapterPropertiesMemoryHeaps*>(this) = WGPUAdapterPropertiesMemoryHeaps{};
+    #endif
+    #else
+            wgpuAdapterPropertiesMemoryHeapsFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUAdapterPropertiesSubgroupMatrixConfigsRef : public WGPUAdapterPropertiesSubgroupMatrixConfigs {
+        // A constructor to zero initialize the struct.
+        WGPUAdapterPropertiesSubgroupMatrixConfigsRef() : WGPUAdapterPropertiesSubgroupMatrixConfigs{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUAdapterPropertiesSubgroupMatrixConfigs: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUAdapterPropertiesSubgroupMatrixConfigsRef( const WGPUAdapterPropertiesSubgroupMatrixConfigsRef& ) = delete;
+        WGPUAdapterPropertiesSubgroupMatrixConfigsRef& operator=( const WGPUAdapterPropertiesSubgroupMatrixConfigsRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUAdapterPropertiesSubgroupMatrixConfigsRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuAdapterPropertiesSubgroupMatrixConfigsFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuAdapterPropertiesSubgroupMatrixConfigsFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUAdapterPropertiesSubgroupMatrixConfigs*>(this) = WGPUAdapterPropertiesSubgroupMatrixConfigs{};
+    #endif
+    #else
+            wgpuAdapterPropertiesSubgroupMatrixConfigsFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUDawnDrmFormatCapabilitiesRef : public WGPUDawnDrmFormatCapabilities {
+        // A constructor to zero initialize the struct.
+        WGPUDawnDrmFormatCapabilitiesRef() : WGPUDawnDrmFormatCapabilities{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUDawnDrmFormatCapabilities: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUDawnDrmFormatCapabilitiesRef( const WGPUDawnDrmFormatCapabilitiesRef& ) = delete;
+        WGPUDawnDrmFormatCapabilitiesRef& operator=( const WGPUDawnDrmFormatCapabilitiesRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUDawnDrmFormatCapabilitiesRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuDawnDrmFormatCapabilitiesFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuDawnDrmFormatCapabilitiesFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUDawnDrmFormatCapabilities*>(this) = WGPUDawnDrmFormatCapabilities{};
+    #endif
+    #else
+            wgpuDawnDrmFormatCapabilitiesFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUSharedBufferMemoryEndAccessStateRef : public WGPUSharedBufferMemoryEndAccessState {
+        // A constructor to zero initialize the struct.
+        WGPUSharedBufferMemoryEndAccessStateRef() : WGPUSharedBufferMemoryEndAccessState{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUSharedBufferMemoryEndAccessState: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUSharedBufferMemoryEndAccessStateRef( const WGPUSharedBufferMemoryEndAccessStateRef& ) = delete;
+        WGPUSharedBufferMemoryEndAccessStateRef& operator=( const WGPUSharedBufferMemoryEndAccessStateRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUSharedBufferMemoryEndAccessStateRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuSharedBufferMemoryEndAccessStateFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuSharedBufferMemoryEndAccessStateFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUSharedBufferMemoryEndAccessState*>(this) = WGPUSharedBufferMemoryEndAccessState{};
+    #endif
+    #else
+            wgpuSharedBufferMemoryEndAccessStateFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUSharedTextureMemoryEndAccessStateRef : public WGPUSharedTextureMemoryEndAccessState {
+        // A constructor to zero initialize the struct.
+        WGPUSharedTextureMemoryEndAccessStateRef() : WGPUSharedTextureMemoryEndAccessState{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUSharedTextureMemoryEndAccessState: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUSharedTextureMemoryEndAccessStateRef( const WGPUSharedTextureMemoryEndAccessStateRef& ) = delete;
+        WGPUSharedTextureMemoryEndAccessStateRef& operator=( const WGPUSharedTextureMemoryEndAccessStateRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUSharedTextureMemoryEndAccessStateRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuSharedTextureMemoryEndAccessStateFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuSharedTextureMemoryEndAccessStateFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUSharedTextureMemoryEndAccessState*>(this) = WGPUSharedTextureMemoryEndAccessState{};
+    #endif
+    #else
+            wgpuSharedTextureMemoryEndAccessStateFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUSupportedFeaturesRef : public WGPUSupportedFeatures {
+        // A constructor to zero initialize the struct.
+        WGPUSupportedFeaturesRef() : WGPUSupportedFeatures{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUSupportedFeatures: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUSupportedFeaturesRef( const WGPUSupportedFeaturesRef& ) = delete;
+        WGPUSupportedFeaturesRef& operator=( const WGPUSupportedFeaturesRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUSupportedFeaturesRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuSupportedFeaturesFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuSupportedFeaturesFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUSupportedFeatures*>(this) = WGPUSupportedFeatures{};
+    #endif
+    #else
+            wgpuSupportedFeaturesFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUSupportedWGSLLanguageFeaturesRef : public WGPUSupportedWGSLLanguageFeatures {
+        // A constructor to zero initialize the struct.
+        WGPUSupportedWGSLLanguageFeaturesRef() : WGPUSupportedWGSLLanguageFeatures{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUSupportedWGSLLanguageFeatures: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUSupportedWGSLLanguageFeaturesRef( const WGPUSupportedWGSLLanguageFeaturesRef& ) = delete;
+        WGPUSupportedWGSLLanguageFeaturesRef& operator=( const WGPUSupportedWGSLLanguageFeaturesRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUSupportedWGSLLanguageFeaturesRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuSupportedWGSLLanguageFeaturesFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuSupportedWGSLLanguageFeaturesFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUSupportedWGSLLanguageFeatures*>(this) = WGPUSupportedWGSLLanguageFeatures{};
+    #endif
+    #else
+            wgpuSupportedWGSLLanguageFeaturesFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUSurfaceCapabilitiesRef : public WGPUSurfaceCapabilities {
+        // A constructor to zero initialize the struct.
+        WGPUSurfaceCapabilitiesRef() : WGPUSurfaceCapabilities{} {
+    #ifdef WEBGPU_RAII_DEBUG
+        std::cout << "Tracking a WGPUSurfaceCapabilities: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #endif
+        }
+        
+        // No copying.
+        WGPUSurfaceCapabilitiesRef( const WGPUSurfaceCapabilitiesRef& ) = delete;
+        WGPUSurfaceCapabilitiesRef& operator=( const WGPUSurfaceCapabilitiesRef& ) = delete;
+        
+        // A destructor to free the members.
+        ~WGPUSurfaceCapabilitiesRef() {
+    #ifdef WEBGPU_RAII_DEBUG
+            std::cout << "wgpuSurfaceCapabilitiesFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            wgpuSurfaceCapabilitiesFreeMembers( *this );
+            // Zero the fields after freeing.
+            *static_cast<WGPUSurfaceCapabilities*>(this) = WGPUSurfaceCapabilities{};
+    #endif
+    #else
+            wgpuSurfaceCapabilitiesFreeMembers( *this );
+    #endif
+        }
+    };
+
+struct WGPUAdapterRef : public std::shared_ptr< std::remove_pointer<WGPUAdapter>::type > {
+        WGPUAdapterRef() {}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, [](WGPUAdapter Adapter){
+            std::cout << "wgpuAdapterRelease(): " << reinterpret_cast<std::uintptr_t>(Adapter) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( Adapter ) wgpuAdapterRelease( Adapter );
+    #endif
+            } ) {
+            std::cout << "Acquired a WGPUAdapter: " << reinterpret_cast<std::uintptr_t>(Adapter) << '\n';
+            }
+    #else
+        WGPUAdapterRef( WGPUAdapter Adapter ) : std::shared_ptr< std::remove_pointer<WGPUAdapter>::type >( Adapter, [](WGPUAdapter Adapter){ if( Adapter ) wgpuAdapterRelease( Adapter ); } ) {}
+    #endif
+        operator WGPUAdapter() const { return get(); }
+    };
+inline WGPUAdapterRef ref( WGPUAdapter Adapter ) { return WGPUAdapterRef( Adapter ); }
 
 struct WGPUBindGroupRef : public std::shared_ptr< std::remove_pointer<WGPUBindGroup>::type > {
         WGPUBindGroupRef() {}
@@ -199,6 +415,24 @@ struct WGPUDeviceRef : public std::shared_ptr< std::remove_pointer<WGPUDevice>::
         operator WGPUDevice() const { return get(); }
     };
 inline WGPUDeviceRef ref( WGPUDevice Device ) { return WGPUDeviceRef( Device ); }
+
+struct WGPUExternalTextureRef : public std::shared_ptr< std::remove_pointer<WGPUExternalTexture>::type > {
+        WGPUExternalTextureRef() {}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPUExternalTextureRef( WGPUExternalTexture ExternalTexture ) : std::shared_ptr< std::remove_pointer<WGPUExternalTexture>::type >( ExternalTexture, [](WGPUExternalTexture ExternalTexture){
+            std::cout << "wgpuExternalTextureRelease(): " << reinterpret_cast<std::uintptr_t>(ExternalTexture) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( ExternalTexture ) wgpuExternalTextureRelease( ExternalTexture );
+    #endif
+            } ) {
+            std::cout << "Acquired a WGPUExternalTexture: " << reinterpret_cast<std::uintptr_t>(ExternalTexture) << '\n';
+            }
+    #else
+        WGPUExternalTextureRef( WGPUExternalTexture ExternalTexture ) : std::shared_ptr< std::remove_pointer<WGPUExternalTexture>::type >( ExternalTexture, [](WGPUExternalTexture ExternalTexture){ if( ExternalTexture ) wgpuExternalTextureRelease( ExternalTexture ); } ) {}
+    #endif
+        operator WGPUExternalTexture() const { return get(); }
+    };
+inline WGPUExternalTextureRef ref( WGPUExternalTexture ExternalTexture ) { return WGPUExternalTextureRef( ExternalTexture ); }
 
 struct WGPUInstanceRef : public std::shared_ptr< std::remove_pointer<WGPUInstance>::type > {
         WGPUInstanceRef() {}
@@ -380,6 +614,60 @@ struct WGPUShaderModuleRef : public std::shared_ptr< std::remove_pointer<WGPUSha
     };
 inline WGPUShaderModuleRef ref( WGPUShaderModule ShaderModule ) { return WGPUShaderModuleRef( ShaderModule ); }
 
+struct WGPUSharedBufferMemoryRef : public std::shared_ptr< std::remove_pointer<WGPUSharedBufferMemory>::type > {
+        WGPUSharedBufferMemoryRef() {}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPUSharedBufferMemoryRef( WGPUSharedBufferMemory SharedBufferMemory ) : std::shared_ptr< std::remove_pointer<WGPUSharedBufferMemory>::type >( SharedBufferMemory, [](WGPUSharedBufferMemory SharedBufferMemory){
+            std::cout << "wgpuSharedBufferMemoryRelease(): " << reinterpret_cast<std::uintptr_t>(SharedBufferMemory) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( SharedBufferMemory ) wgpuSharedBufferMemoryRelease( SharedBufferMemory );
+    #endif
+            } ) {
+            std::cout << "Acquired a WGPUSharedBufferMemory: " << reinterpret_cast<std::uintptr_t>(SharedBufferMemory) << '\n';
+            }
+    #else
+        WGPUSharedBufferMemoryRef( WGPUSharedBufferMemory SharedBufferMemory ) : std::shared_ptr< std::remove_pointer<WGPUSharedBufferMemory>::type >( SharedBufferMemory, [](WGPUSharedBufferMemory SharedBufferMemory){ if( SharedBufferMemory ) wgpuSharedBufferMemoryRelease( SharedBufferMemory ); } ) {}
+    #endif
+        operator WGPUSharedBufferMemory() const { return get(); }
+    };
+inline WGPUSharedBufferMemoryRef ref( WGPUSharedBufferMemory SharedBufferMemory ) { return WGPUSharedBufferMemoryRef( SharedBufferMemory ); }
+
+struct WGPUSharedFenceRef : public std::shared_ptr< std::remove_pointer<WGPUSharedFence>::type > {
+        WGPUSharedFenceRef() {}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPUSharedFenceRef( WGPUSharedFence SharedFence ) : std::shared_ptr< std::remove_pointer<WGPUSharedFence>::type >( SharedFence, [](WGPUSharedFence SharedFence){
+            std::cout << "wgpuSharedFenceRelease(): " << reinterpret_cast<std::uintptr_t>(SharedFence) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( SharedFence ) wgpuSharedFenceRelease( SharedFence );
+    #endif
+            } ) {
+            std::cout << "Acquired a WGPUSharedFence: " << reinterpret_cast<std::uintptr_t>(SharedFence) << '\n';
+            }
+    #else
+        WGPUSharedFenceRef( WGPUSharedFence SharedFence ) : std::shared_ptr< std::remove_pointer<WGPUSharedFence>::type >( SharedFence, [](WGPUSharedFence SharedFence){ if( SharedFence ) wgpuSharedFenceRelease( SharedFence ); } ) {}
+    #endif
+        operator WGPUSharedFence() const { return get(); }
+    };
+inline WGPUSharedFenceRef ref( WGPUSharedFence SharedFence ) { return WGPUSharedFenceRef( SharedFence ); }
+
+struct WGPUSharedTextureMemoryRef : public std::shared_ptr< std::remove_pointer<WGPUSharedTextureMemory>::type > {
+        WGPUSharedTextureMemoryRef() {}
+    #ifdef WEBGPU_RAII_DEBUG
+        WGPUSharedTextureMemoryRef( WGPUSharedTextureMemory SharedTextureMemory ) : std::shared_ptr< std::remove_pointer<WGPUSharedTextureMemory>::type >( SharedTextureMemory, [](WGPUSharedTextureMemory SharedTextureMemory){
+            std::cout << "wgpuSharedTextureMemoryRelease(): " << reinterpret_cast<std::uintptr_t>(SharedTextureMemory) << '\n';
+    #ifndef WEBGPU_RAII_LEAK
+            if( SharedTextureMemory ) wgpuSharedTextureMemoryRelease( SharedTextureMemory );
+    #endif
+            } ) {
+            std::cout << "Acquired a WGPUSharedTextureMemory: " << reinterpret_cast<std::uintptr_t>(SharedTextureMemory) << '\n';
+            }
+    #else
+        WGPUSharedTextureMemoryRef( WGPUSharedTextureMemory SharedTextureMemory ) : std::shared_ptr< std::remove_pointer<WGPUSharedTextureMemory>::type >( SharedTextureMemory, [](WGPUSharedTextureMemory SharedTextureMemory){ if( SharedTextureMemory ) wgpuSharedTextureMemoryRelease( SharedTextureMemory ); } ) {}
+    #endif
+        operator WGPUSharedTextureMemory() const { return get(); }
+    };
+inline WGPUSharedTextureMemoryRef ref( WGPUSharedTextureMemory SharedTextureMemory ) { return WGPUSharedTextureMemoryRef( SharedTextureMemory ); }
+
 struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>::type > {
         WGPUSurfaceRef() {}
     #ifdef WEBGPU_RAII_DEBUG
@@ -397,33 +685,6 @@ struct WGPUSurfaceRef : public std::shared_ptr< std::remove_pointer<WGPUSurface>
         operator WGPUSurface() const { return get(); }
     };
 inline WGPUSurfaceRef ref( WGPUSurface Surface ) { return WGPUSurfaceRef( Surface ); }
-
-struct WGPUSurfaceCapabilitiesRef : public WGPUSurfaceCapabilities {
-        // A constructor to zero initialize the struct.
-        WGPUSurfaceCapabilitiesRef() : WGPUSurfaceCapabilities{} {
-    #ifdef WEBGPU_RAII_DEBUG
-        std::cout << "Tracking a WGPUSurfaceCapabilities: " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
-    #endif
-        }
-        
-        // No copying.
-        WGPUSurfaceCapabilitiesRef( const WGPUSurfaceCapabilitiesRef& ) = delete;
-        WGPUSurfaceCapabilitiesRef& operator=( const WGPUSurfaceCapabilitiesRef& ) = delete;
-        
-        // A destructor to free the members.
-        ~WGPUSurfaceCapabilitiesRef() {
-    #ifdef WEBGPU_RAII_DEBUG
-            std::cout << "wgpuSurfaceCapabilitiesFreeMembers(): " << reinterpret_cast<std::uintptr_t>( this ) << '\n';
-    #ifndef WEBGPU_RAII_LEAK
-            wgpuSurfaceCapabilitiesFreeMembers( *this );
-            // Zero the fields after freeing.
-            *static_cast<WGPUSurfaceCapabilities*>(this) = WGPUSurfaceCapabilities{};
-    #endif
-    #else
-            wgpuSurfaceCapabilitiesFreeMembers( *this );
-    #endif
-        }
-    };
 
 struct WGPUTextureRef : public std::shared_ptr< std::remove_pointer<WGPUTexture>::type > {
         WGPUTextureRef() {}
