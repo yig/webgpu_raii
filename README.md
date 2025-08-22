@@ -1,5 +1,7 @@
 A minimal C++ RAII wrapper for WebGPU's C API. It's based on `std::shared_ptr`. It is guaranteed correct; the single WebGPU reference count will be managed by the shared pointer, and eventually released.
 
+The dawn branch is based on dawn's `webgpu.h`. The wgpu-native branch is based on wgpu-native's `webgpu.h`. As of this writing, the wgpu-native `webgpu_raii.h` works with wgpu-native AND dawn, while the dawn `webgpu_raii.h` only works with dawn.
+
 ## Installation
 
 Copy the `webgpu_raii.h` header next to your code.
